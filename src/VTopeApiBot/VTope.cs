@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Flurl.Http;
+using VTopeApiBot.Requests.Abstractions;
 
 namespace VTopeApiBot
 {
@@ -38,6 +42,18 @@ namespace VTopeApiBot
             
             _user = user;
             _key = key;
+        }
+        
+        /// <inheritdoc/>
+        public async Task<TResponse> MakeRequestAsync<TResponse>(
+            IRequest<TResponse> request,
+            CancellationToken cancellationToken = default)
+        {
+            var url = $"https://vto.pe/botcontrol/{request.MethodName}";
+            
+            return await url.PostJsonAsync(request.Parameters(), cancellationToken)
+                .ReceiveJson<TResponse>()
+                .ConfigureAwait(false);
         }
     }
 }
