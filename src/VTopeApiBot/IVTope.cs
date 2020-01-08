@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using VTopeApiBot.Requests.Abstractions;
+using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
 {
@@ -19,5 +20,15 @@ namespace VTopeApiBot
         Task<TResponse> MakeRequestAsync<TResponse>(
             IRequest<TResponse> request,
             CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        ///     Use this method to get list of all bots
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>On success, the sent list of all bots</returns>
+        /// <see cref="https://vto.pe/docs/api/?tab=api-bot"/>
+        Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default);
+
+        public void Dispose();
     }
 }
