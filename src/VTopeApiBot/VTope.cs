@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Flurl.Http;
+using Newtonsoft.Json;
+using VTopeApiBot.Options;
 using VTopeApiBot.Requests;
 using VTopeApiBot.Requests.Abstractions;
 using VTopeApiBot.Requests.Avaible_Methods;
@@ -12,7 +16,7 @@ namespace VTopeApiBot
     /// <summary>
     ///     Main entry class to use VTope API 
     /// </summary>
-    public class VTope : IVTope, IDisposable
+    public class VTope : IVTope
     {
         /// <summary>
         ///     Unique 'user' value for authorization
@@ -24,29 +28,37 @@ namespace VTopeApiBot
         /// </summary>
         private readonly string _key;
 
+        private readonly HttpClient _httpClient;
+
         /// <summary>
         ///     Create a new <see cref="VTope"/> instance 
         /// </summary>
-        /// <param name="user">Unique 'user' value for authorization</param>
-        /// <param name="key">Unique 'key' value for authorization</param>
+        /// <param name="options"><see cref="AuthorizeOptions"/> for authorization</param>
+        /// <param name="httpClient">A custom <see cref="HttpClient"/></param>
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="user"/> or <paramref name="key"/> is null or whitespace
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///    Thrown if <paramref name="httpClient"/> is null
+        /// </exception>
         /// <remarks>
-        ///     'user' and 'key' values can be taken
+        ///     values for authorization can be taken
         ///     in the docs: https://vto.pe/docs/api/?tab=api-bot
         /// </remarks>
-        public VTope(string user, string key)
+        public VTope(AuthorizeOptions options, HttpClient httpClient)
         {
-            if (string.IsNullOrWhiteSpace(user))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(user));
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
+            if (options == null) throw new ArgumentNullException(nameof(options));
             
-            _user = user;
-            _key = key;
+            if (string.IsNullOrWhiteSpace(options.User))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(options.User));
+            if (string.IsNullOrWhiteSpace(options.Key))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(options.Key));
+            
+            _user = options.User;
+            _key = options.Key;
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
-        
+
         /// <summary>
         ///     For authorization, it is necessary to add
         ///     user and key parameters to each request.

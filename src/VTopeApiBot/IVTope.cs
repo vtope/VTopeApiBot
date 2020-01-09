@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using VTopeApiBot.Requests.Abstractions;
 using VTopeApiBot.Types.Responses;
@@ -8,7 +9,7 @@ namespace VTopeApiBot
     /// <summary>
     ///     Interface of main entry class to use VTope API 
     /// </summary>
-    public interface IVTope
+    public interface IVTope : IDisposable
     {
         /// <summary>
         ///     Send a request to VTope API
@@ -28,7 +29,5 @@ namespace VTopeApiBot
         /// <returns>On success, the sent list of all bots</returns>
         /// <see cref="https://vto.pe/docs/api/?tab=api-bot"/>
         Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default);
-
-        public void Dispose();
     }
 }
