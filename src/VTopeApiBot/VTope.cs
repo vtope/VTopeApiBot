@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Flurl.Http;
 using Newtonsoft.Json;
 using VTopeApiBot.Options;
 using VTopeApiBot.Requests;
@@ -28,6 +27,9 @@ namespace VTopeApiBot
         /// </summary>
         private readonly string _key;
 
+        /// <summary>
+        ///     HttpClient instance
+        /// </summary>
         private readonly HttpClient _httpClient;
 
         /// <summary>
@@ -48,29 +50,25 @@ namespace VTopeApiBot
         public VTope(AuthorizeOptions options, HttpClient httpClient)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            
-            if (string.IsNullOrWhiteSpace(options.User))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(options.User));
-            if (string.IsNullOrWhiteSpace(options.Key))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(options.Key));
+            if(httpClient == null) throw new ArgumentNullException(nameof(httpClient));
             
             _user = options.User;
             _key = options.Key;
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _httpClient = httpClient;
         }
 
         /// <summary>
         ///     For authorization, it is necessary to add
         ///     user and key parameters to each request.
         /// </summary>
-        /// <param name="params">Requests params <see cref="VTopeParams"/></param>
+        /// <param name="args">Requests params <see cref="VTopeParams"/></param>
         /// <returns>Requests params with authorize data</returns>
         /// <remarks>Docs: https://vto.pe/docs/api/?tab=api-bot</remarks>
-        private VTopeParams Authorize(VTopeParams @params)
+        private VTopeParams Authorize(VTopeParams args)
         {
-            @params.Add("user", _user);
-            @params.Add("key", _key);
-            return @params;
+            args.Add("user", _user);
+            args.Add("key", _key);
+            return args;
         }
         
         /// <inheritdoc/>
@@ -78,12 +76,26 @@ namespace VTopeApiBot
             IRequest<TResponse> request,
             CancellationToken cancellationToken = default)
         {
-            var @params = Authorize(request.Parameters());
+            var args = Authorize(request.Parameters());
             var url = $"https://vto.pe/botcontrol/{request.MethodName}";
             
-            return await url.PostJsonAsync(@params, cancellationToken)
-                .ReceiveJson<TResponse>()
+            var payload = JsonConvert.SerializeObject(args);
+            var content = new StringContent(payload, Encoding.UTF8, "application/json");
+            
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Content = content
+            };
+            
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken)
                 .ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+            
+            var responseJson = await response.Content.ReadAsStringAsync()
+                .ConfigureAwait(false);
+
+            return JsonConvert.DeserializeObject<TResponse>(responseJson);
         }
         
         /// <inheritdoc/>
