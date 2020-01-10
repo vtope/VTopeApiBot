@@ -1,0 +1,34 @@
+﻿{
+  "bots": [
+    {
+      "access": "on",
+      "status": "danger",
+      "accounts": {
+        "warning": 53,
+        "primary": 26,
+        "success": 14,
+        "danger": 40
+      },
+      "app_name": null,
+      "earned": {
+        "week": 45,
+        "total": 60,
+        "day": 4,
+        "month": 3
+      },
+      "proxies": {
+        "warning": 4,
+        "success": 10,
+        "danger": 2
+      },
+      "id": 1234567,
+      "name": "nickname"
+    }
+  ],
+  "earned": {
+    "week": 5,
+    "total": 45,
+    "today": 23,
+    "month": 4
+  }
+}
