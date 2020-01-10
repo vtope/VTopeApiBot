@@ -81,13 +81,8 @@ namespace VTopeApiBot
             
             var payload = JsonConvert.SerializeObject(args);
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
-            
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
-            {
-                Content = content
-            };
-            
-            var response = await _httpClient.SendAsync(httpRequest, cancellationToken)
+
+            var response = await _httpClient.PostAsync(url, content, cancellationToken)
                 .ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
