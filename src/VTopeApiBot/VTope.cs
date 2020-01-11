@@ -104,6 +104,10 @@ namespace VTopeApiBot
         /// <inheritdoc/>
         public Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync(new DeleteBotRequest(id), cancellationToken);
+
+        /// <inheritdoc/>
+        public Task<CodeResponse> RenameBotAsync(long id, string name, CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new RenameBotRequest(id, name), cancellationToken);
         
         public void Dispose()
         {

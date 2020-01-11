@@ -43,5 +43,21 @@ namespace VTopeApiBot.Tests.Avaible_Methods
             Equal("deletebot", deleteBotRequest.MethodName);
             Equal(1, deleteBotRequest.Id);
         }
+
+        [Fact]
+        public void RenameBotRequest()
+        {
+            // Arrange
+            const long id = 1;
+            const string name = "name";
+            
+            // Act
+            var renameBotRequest = new RenameBotRequest(id, name);
+            
+            // Assert
+            Equal("renamebot", renameBotRequest.MethodName);
+            Equal(1, renameBotRequest.Id);
+            Equal("name", renameBotRequest.Name);
+        }
     }
 }
