@@ -25,22 +25,40 @@ namespace VTopeApiBot.Types
         [JsonConverter(typeof(StringEnumConverter))]
         public Status Status { get; set; }
 
+        /// <summary>
+        ///     Accounts
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public Account Accounts { get; set; }
 
+        /// <summary>
+        ///     Application name
+        /// </summary>
         [JsonProperty(Required = Required.AllowNull)]
         public object AppName { get; set; }
 
+        /// <summary>
+        ///     Earned information
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public Earned Earned { get; set; }
 
+        /// <summary>
+        ///     Proxies information
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public Proxy Proxies { get; set; }
 
-        [JsonProperty("id", Required = Required.Always)]
+        /// <summary>
+        ///     Id bot
+        /// </summary>
+        [JsonProperty(Required = Required.Always)]
         public long Id { get; set; }
 
-        [JsonProperty("name", Required = Required.Always)]
+        /// <summary>
+        ///     Name bot
+        /// </summary>
+        [JsonProperty(Required = Required.Always)]
         public string Name { get; set; }
     }
 }
