@@ -9,55 +9,61 @@ namespace VTopeApiBot.Tests.Avaible_Methods
         [Fact]
         public void GetBotsRequest()
         {
+            // Arrange
+            const string methodName = "list";
+            
             // Act
-            var getBotsRequest = new GetBotsRequest();
+            var request = new GetBotsRequest();
             
             // Assert
-            Equal("list", getBotsRequest.MethodName);
+            Equal(methodName, request.MethodName);
         }
 
         [Fact]
         public void GetBotByIdRequest()
         {
             // Arrange
+            const string methodName = "bot";
             const long id = 1;
             
             // Act
-            var getBotByIdRequest = new GetBotByIdRequest(id);
+            var request = new GetBotByIdRequest(id);
             
             // Assert
-            Equal("bot", getBotByIdRequest.MethodName);
-            Equal(1, getBotByIdRequest.Id);
+            Equal(methodName, request.MethodName);
+            Equal(id, request.Id);
         }
 
         [Fact]
         public void DeleteBotRequest()
         {
             // Arrange
+            const string methodName = "deletebot";
             const long id = 1;
             
             // Act
-            var deleteBotRequest = new DeleteBotRequest(id);
+            var request = new DeleteBotRequest(id);
             
             // Assert
-            Equal("deletebot", deleteBotRequest.MethodName);
-            Equal(1, deleteBotRequest.Id);
+            Equal(methodName, request.MethodName);
+            Equal(id, request.Id);
         }
 
         [Fact]
         public void RenameBotRequest()
         {
             // Arrange
+            const string methodName = "renamebot";
             const long id = 1;
             const string name = "name";
             
             // Act
-            var renameBotRequest = new RenameBotRequest(id, name);
+            var request = new RenameBotRequest(id, name);
             
             // Assert
-            Equal("renamebot", renameBotRequest.MethodName);
-            Equal(1, renameBotRequest.Id);
-            Equal("name", renameBotRequest.Name);
+            Equal(methodName, request.MethodName);
+            Equal(id, request.Id);
+            Equal(name, request.Name);
         }
     }
 }
