@@ -26,5 +26,16 @@ namespace VTopeApiBot.Tests.Avaible_Methods
             // Assert
             Equal("bot", getBotByIdRequest.MethodName);
         }
+
+        [Fact]
+        public void Should_DeleteBot_In_MethodName()
+        {
+            // Arrange
+            const long id = 1;
+            var deleteBotRequest = new DeleteBotRequest(id);
+            
+            // Assert
+            Equal("deletebot", deleteBotRequest.MethodName);
+        }
     }
 }

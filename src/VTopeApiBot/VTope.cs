@@ -100,7 +100,11 @@ namespace VTopeApiBot
         /// <inheritdoc/>
         public Task<BotResponse> GetBotByIdAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync(new GetBotByIdRequest(id), cancellationToken);
-
+        
+        /// <inheritdoc/>
+        public Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new DeleteBotRequest(id), cancellationToken);
+        
         public void Dispose()
         {
             GC.SuppressFinalize(this);
