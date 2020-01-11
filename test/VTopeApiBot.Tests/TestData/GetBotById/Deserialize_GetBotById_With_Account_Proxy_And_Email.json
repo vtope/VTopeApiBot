@@ -1,0 +1,46 @@
+{
+  "status": "danger",
+  "app_name": null,
+  "allow_control": false,
+  "accounts": [
+    {
+      "status": "badpreauth",
+      "proxy": {
+        "status": "tooslow",
+        "ip": "0.0.0.0",
+        "port": "27438",
+        "ip_version": 4,
+        "login": null,
+        "type": "socks5",
+        "id": 1234567
+      },
+      "id": 123456,
+      "service": "m",
+      "img": null,
+      "level": null,
+      "strategy": null,
+      "proxy_mode": "manual",
+      "mail": {
+        "email": "email@email.com",
+        "password": "123"
+      },
+      "login": "79000000000",
+      "earned_today": 0,
+      "earned_total": 0
+    }
+  ],
+  "proxies": [],
+  "earning": false,
+  "name": "nickname",
+  "earned": {
+    "week": 0,
+    "today": 0,
+    "month": 0
+  },
+  "id": 123456,
+  "access": "on",
+  "strategies": {
+    "i": [],
+    "v": []
+  }
+}

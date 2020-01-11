@@ -1,28 +1,28 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 // ReSharper disable UnusedMember.Global
 
 namespace VTopeApiBot.Types.Enums
 {
     /// <summary>
-    ///     Bot status
+    ///     Proxy types
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter), true)]
-    public enum Status
+    public enum ProxyType
     {
         /// <summary>
-        ///     The bot is working, everything is fine
+        ///     Http
         /// </summary>
-        Success,
-
+        Http,
+        
         /// <summary>
-        ///     The bot works, but there are problems
+        ///     Https
         /// </summary>
-        Warning,
-
+        Https,
+        
         /// <summary>
-        ///     Bot does not earn points
+        ///     Socks5
         /// </summary>
-        Danger
+        Socks5,
     }
 }

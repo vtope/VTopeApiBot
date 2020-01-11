@@ -1,27 +1,23 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 // ReSharper disable UnusedMember.Global
+
 namespace VTopeApiBot.Types.Enums
 {
     /// <summary>
-    ///     Bot access
+    ///     Proxy versions
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter), true)]
-    public enum Access
+    public enum ProxyVersion
     {
         /// <summary>
-        ///     Available
+        ///     Social network support IPv4
         /// </summary>
-        On,
+        Ipv4Proxy = 4,
         
         /// <summary>
-        ///     Offline
+        ///     Social network support IPv4
         /// </summary>
-        Off,
-        
-        /// <summary>
-        ///     No connection
-        /// </summary>
-        NoConnection
+        Ipv6Proxy = 6,
     }
 }

@@ -19,8 +19,8 @@ namespace VTopeApiBot.Types
         /// <summary>
         ///     Earned all the time
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
-        public long Total { get; set; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public long? Total { get; set; }
         
         // TODO: not found information about this property in docs. Need to write in support
         /// <summary>

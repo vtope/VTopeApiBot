@@ -29,5 +29,13 @@ namespace VTopeApiBot
         /// <returns>On success, the sent list of all bots</returns>
         /// <see cref="https://vto.pe/docs/api/?tab=api-bot"/>
         Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Use this method to get bot by id
+        /// </summary>
+        /// <param name="id">Bot id</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>On success, the sent concrete bot by id</returns>
+        Task<BotResponse> GetBotByIdAsync(long id, CancellationToken cancellationToken = default);
     }
 }

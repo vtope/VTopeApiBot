@@ -35,7 +35,7 @@ namespace VTopeApiBot.Types
         public Earned Earned { get; set; }
 
         [JsonProperty(Required = Required.Always)]
-        public Proxies Proxies { get; set; }
+        public Proxy Proxies { get; set; }
 
         [JsonProperty("id", Required = Required.Always)]
         public long Id { get; set; }

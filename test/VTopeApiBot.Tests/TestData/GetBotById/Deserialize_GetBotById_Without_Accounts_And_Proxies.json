@@ -1,0 +1,20 @@
+{
+  "status": "danger",
+  "app_name": null,
+  "allow_control": true,
+  "accounts": [],
+  "proxies": [],
+  "earning": false,
+  "name": "nickname",
+  "earned": {
+    "week": 5,
+    "today": 4,
+    "month": 3
+  },
+  "id": 12345678,
+  "access": "on",
+  "strategies": {
+    "i": [],
+    "v": []
+  }
+}

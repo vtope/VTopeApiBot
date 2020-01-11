@@ -15,5 +15,16 @@ namespace VTopeApiBot.Tests.Avaible_Methods
             // Assert
             Equal("list", getBotsRequest.MethodName);
         }
+
+        [Fact]
+        public void Should_Bot_In_MethodName()
+        {
+            // Arrange
+            const long id = 1;
+            var getBotByIdRequest = new GetBotByIdRequest(id);
+            
+            // Assert
+            Equal("bot", getBotByIdRequest.MethodName);
+        }
     }
 }
