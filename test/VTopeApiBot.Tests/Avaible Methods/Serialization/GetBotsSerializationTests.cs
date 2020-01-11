@@ -15,10 +15,10 @@ namespace VTopeApiBot.Tests.Avaible_Methods.Serialization
         protected override string Folder => "GetBots";
         
         [Fact]
-        public void Deserialize_GetBots_Should_One_Bot()
+        public void Deserialize_GetBots_ReturnBots()
         {
             // Arrange
-            var json = ReadJsonFile(nameof(Deserialize_GetBots_Should_One_Bot));
+            var json = ReadJsonFile(nameof(Deserialize_GetBots_ReturnBots));
             
             // Act
             var response = JsonConvert.DeserializeObject<BotsResponse>(json);
