@@ -20,7 +20,7 @@ namespace VTopeApiBot.Requests.Avaible_Methods
         ///     Id bot
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        public long Id { get; set; }
+        public long Id { get; }
 
         public override VTopeParams Parameters() =>
             new VTopeParams

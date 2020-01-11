@@ -4,12 +4,12 @@ using static Xunit.Assert;
 
 namespace VTopeApiBot.Tests.Avaible_Methods
 {
-    public class MethodNameTests
+    public class RequestParametersTests
     {
         [Fact]
-        public void Should_List_In_MethodName()
+        public void GetBotsRequest()
         {
-            // Arrange
+            // Act
             var getBotsRequest = new GetBotsRequest();
             
             // Assert
@@ -17,25 +17,31 @@ namespace VTopeApiBot.Tests.Avaible_Methods
         }
 
         [Fact]
-        public void Should_Bot_In_MethodName()
+        public void GetBotByIdRequest()
         {
             // Arrange
             const long id = 1;
+            
+            // Act
             var getBotByIdRequest = new GetBotByIdRequest(id);
             
             // Assert
             Equal("bot", getBotByIdRequest.MethodName);
+            Equal(1, getBotByIdRequest.Id);
         }
 
         [Fact]
-        public void Should_DeleteBot_In_MethodName()
+        public void DeleteBotRequest()
         {
             // Arrange
             const long id = 1;
+            
+            // Act
             var deleteBotRequest = new DeleteBotRequest(id);
             
             // Assert
             Equal("deletebot", deleteBotRequest.MethodName);
+            Equal(1, deleteBotRequest.Id);
         }
     }
 }
