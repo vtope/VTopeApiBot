@@ -108,6 +108,13 @@ namespace VTopeApiBot
         /// <inheritdoc/>
         public Task<CodeResponse> RenameBotAsync(long id, string name, CancellationToken cancellationToken = default)
             => MakeRequestAsync(new RenameBotRequest(id, name), cancellationToken);
+
+        /// <inheritdoc/>
+        public Task<CodeResponse> ChangeEarnStateRequestAsync(
+            long id,
+            bool state,
+            CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new ChangeEarnStateRequest(id, state), cancellationToken);
         
         public void Dispose()
         {

@@ -65,5 +65,22 @@ namespace VTopeApiBot.Tests.Avaible_Methods
             Equal(id, request.Id);
             Equal(name, request.Name);
         }
+        
+        [Fact]
+        public void ChangeEarnStateRequest()
+        {
+            // Arrange
+            const string methodName = "earnstate";
+            const long id = 1;
+            const bool state = true;
+            
+            // Act
+            var request = new ChangeEarnStateRequest(id, state);
+            
+            // Assert
+            Equal(methodName, request.MethodName);
+            Equal(id, request.Id);
+            Equal(state, request.State);
+        }
     }
 }

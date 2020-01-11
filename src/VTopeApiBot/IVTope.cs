@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using VTopeApiBot.Requests.Abstractions;
+using VTopeApiBot.Requests.Avaible_Methods;
 using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
@@ -54,5 +55,18 @@ namespace VTopeApiBot
         /// <param name="cancellationToken"></param>
         /// <returns>On success, the sent ok response</returns>
         Task<CodeResponse> RenameBotAsync(long id, string name, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Use this method to change bot earn state
+        /// </summary>
+        /// <param name="id">Bot id</param>
+        /// <param name="state">Earning status</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>On success, the sent ok response</returns>
+        Task<CodeResponse> ChangeEarnStateRequestAsync(
+            long id,
+            bool state,
+            CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new ChangeEarnStateRequest(id, state), cancellationToken);
     }
 }
