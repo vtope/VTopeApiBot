@@ -1,4 +1,5 @@
-﻿using VTopeApiBot.Requests.Abstractions;
+﻿using System;
+using VTopeApiBot.Requests.Abstractions;
 
 namespace VTopeApiBot.Requests
 {

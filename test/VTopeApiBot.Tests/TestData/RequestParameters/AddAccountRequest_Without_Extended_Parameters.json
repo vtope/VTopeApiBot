@@ -1,0 +1,10 @@
+﻿{
+  "bot": 1234567,
+  "service": "i",
+  "login": "login",
+  "password": "password",
+  "mail": null,
+  "strategy": null,
+  "proxy_mode": null,
+  "proxy": null
+}
