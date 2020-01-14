@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VTopeApiBot.Requests.Abstractions;
 using VTopeApiBot.Requests.Avaible_Methods;
+using VTopeApiBot.Types.Params;
 using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
@@ -68,5 +69,16 @@ namespace VTopeApiBot
             bool state,
             CancellationToken cancellationToken = default)
             => MakeRequestAsync(new ChangeEarnStateRequest(id, state), cancellationToken);
+
+        /// <summary>
+        ///     Use this method to add account in bot
+        /// </summary>
+        /// <param name="parameters">parameters for add account</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>On success, the sent ok response</returns>
+        public Task<CodeResponse> AddAccountAsync(
+            ActionParams parameters,
+            CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new AddAccountRequest(parameters), cancellationToken);
     }
 }

@@ -8,6 +8,7 @@ using VTopeApiBot.Options;
 using VTopeApiBot.Requests;
 using VTopeApiBot.Requests.Abstractions;
 using VTopeApiBot.Requests.Avaible_Methods;
+using VTopeApiBot.Types.Params;
 using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
@@ -50,8 +51,8 @@ namespace VTopeApiBot
         public VTope(AuthorizeOptions options, HttpClient httpClient)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            if(httpClient == null) throw new ArgumentNullException(nameof(httpClient));
-            
+            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+
             _user = options.User;
             _key = options.Key;
             _httpClient = httpClient;
@@ -78,7 +79,7 @@ namespace VTopeApiBot
         {
             var args = Authorize(request.Parameters());
             var url = $"https://vto.pe/botcontrol/{request.MethodName}";
-            
+
             var payload = JsonConvert.SerializeObject(args);
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
@@ -86,13 +87,13 @@ namespace VTopeApiBot
                 .ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
-            
+
             var responseJson = await response.Content.ReadAsStringAsync()
                 .ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<TResponse>(responseJson);
         }
-        
+
         /// <inheritdoc/>
         public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default)
             => MakeRequestAsync(new GetBotsRequest(), cancellationToken);
@@ -100,7 +101,7 @@ namespace VTopeApiBot
         /// <inheritdoc/>
         public Task<BotResponse> GetBotByIdAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync(new GetBotByIdRequest(id), cancellationToken);
-        
+
         /// <inheritdoc/>
         public Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync(new DeleteBotRequest(id), cancellationToken);
@@ -116,6 +117,12 @@ namespace VTopeApiBot
             CancellationToken cancellationToken = default)
             => MakeRequestAsync(new ChangeEarnStateRequest(id, state), cancellationToken);
         
+        /// <inheritdoc/>
+        public Task<CodeResponse> AddAccountAsync(
+            ActionParams parameters,
+            CancellationToken cancellationToken = default)
+            => MakeRequestAsync(new AddAccountRequest(parameters), cancellationToken);
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);

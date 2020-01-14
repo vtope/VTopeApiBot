@@ -63,7 +63,7 @@ namespace VTopeApiBot.Types
         /// <summary>
         ///      Proxy selection mode
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.AllowNull)]
         [JsonConverter(typeof(StringEnumConverter))]
         public ProxyMode? ProxyMode { get; set; }
         
