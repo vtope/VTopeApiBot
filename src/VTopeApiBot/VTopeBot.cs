@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using VTopeApiBot.Credentials;
 using VTopeApiBot.Extensions;
 using VTopeApiBot.Requests;
+using VTopeApiBot.Requests.AvailableMethods;
+using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
 {
@@ -41,6 +43,11 @@ namespace VTopeApiBot
             _httpClient = httpClient ?? new HttpClient();
             _logger = logger ?? new Logger<VTopeBot>(factory: new NullLoggerFactory());
         }
+
+        /// <inheritdoc />
+        public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default)
+            => MakeRequestAsync(request: new GetBotsRequest(), cancellationToken: cancellationToken);
+
         /// <inheritdoc />
         public void Dispose()
         {

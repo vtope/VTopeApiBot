@@ -28,5 +28,10 @@ namespace VTopeApiBot
         /// <returns>Result of the API request.</returns>
         Task<T> MakeRequestAsync<T>(IRequest<T> request, CancellationToken cancellationToken = default);
         
+        /// <summary>
+        ///     Use this method to get list of all bots.
+        /// </summary>
+        /// <returns>On success, the sent list of all bots.</returns>
+        Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default);
     }
 }
