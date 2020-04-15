@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using VTopeApiBot.Credentials;
 using VTopeApiBot.Extensions;
 using VTopeApiBot.Requests;
-using VTopeApiBot.Requests.AvailableMethods;
 using VTopeApiBot.Types.Responses;
 
 namespace VTopeApiBot
@@ -46,7 +45,7 @@ namespace VTopeApiBot
 
         /// <inheritdoc />
         public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default)
-            => MakeRequestAsync(request: new GetBotsRequest(), cancellationToken: cancellationToken);
+            => MakeRequestAsync<BotsResponse>(methodName: "list", @params: VTopeParams.Empty, cancellationToken: cancellationToken);
 
         /// <inheritdoc />
         public void Dispose()
@@ -54,91 +53,90 @@ namespace VTopeApiBot
             _httpClient?.Dispose();
         }
 
-        /// <summary>
-        ///     Adds authorization parameters.
-        ///     Must be used in every request.
-        /// </summary>
-        /// <param name="args">Request params.</param>
-        private VTopeParams Authorize(VTopeParams args)
-        {
-            if (args == null)
-            {
-                throw new ArgumentNullException(paramName: nameof(args));
-            }
-
-            args.Add(key: "user", value: User);
-            args.Add(key: "key", value: Key);
-            return args;
-        }
-
         /// <inheritdoc />
-        public async Task<T> MakeRequestAsync<T>(string methodName, VTopeParams args,
+        public async Task<T> MakeRequestAsync<T>(
+            string methodName,
+            VTopeParams @params,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (string.IsNullOrWhiteSpace(value: methodName))
-                throw new ArgumentException(message: "Value cannot be null or whitespace.",
-                    paramName: nameof(methodName));
-            if (args == null) throw new ArgumentNullException(paramName: nameof(args));
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (!args.ContainsKey(key: "user"))
             {
-                args.Add(key: "user", value: User);
+                throw new ArgumentException(message: "Value cannot be null or whitespace.", paramName: nameof(methodName));
             }
 
-            if (!args.ContainsKey(key: "key"))
+            if (@params == null)
             {
-                args.Add(key: "key", value: Key);
+                throw new ArgumentNullException(paramName: nameof(@params));
             }
 
             var url = $"https://vto.pe/botcontrol/{methodName}";
-            var response = await MakeRequestAsync(url: url, args: args, cancellationToken: cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false);
-
-            return JsonConvert.DeserializeObject<T>(value: response);
-        }
-
-        /// <inheritdoc />
-        public async Task<T> MakeRequestAsync<T>(IRequest<T> request, CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var methodName = request.MethodName;
-            var args = Authorize(args: request.ToParameters());
-
-            return await MakeRequestAsync<T>(methodName: methodName, args: args, cancellationToken: cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false);
-        }
-
-        private async Task<string> MakeRequestAsync(
-            string url,
-            VTopeParams args,
-            CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var payload = JsonConvert.SerializeObject(value: args, formatting: Formatting.Indented);
+            var payload = SerializeObject(value: Authorize(@params: @params));
             var content = GetContent(payload: payload);
 
             _logger?.LogDebug(message: $"POST request: {url}{Environment.NewLine}{payload}");
 
-            var response = await _httpClient
-                .PostAsync(requestUri: url, content: content, cancellationToken: cancellationToken)
+            var response = await PostAsync(
+                    requestUri: url,
+                    content: content,
+                    cancellationToken: cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
+            var json = response.ToJObject();
+            var formatted = json.ToString(formatting: Formatting.Indented);
+            _logger?.LogDebug(message: $"POST response: {url}{Environment.NewLine}{formatted}");
+
+            return json.ToObject<T>();
+        }
+
+        /// <summary>
+        ///     Authorizes the bot. Required for each request.
+        /// </summary>
+        private VTopeParams Authorize(VTopeParams @params)
+        {
+            if (@params == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(@params));
+            }
+
+            if (!@params.ContainsKey(key: "user"))
+            {
+                @params.Add(key: "user", value: User);
+            }
+
+            if (!@params.ContainsKey(key: "key"))
+            {
+                @params.Add(key: "key", value: Key);
+            }
+
+            return @params;
+        }
+
+        /// <inheritdoc cref="System.Net.Http.HttpClient.PostAsync(String, HttpContent)"/>
+        private async Task<string> PostAsync(
+            string requestUri,
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            
+            var response = await _httpClient.PostAsync(
+                    requestUri: requestUri,
+                    content: content,
+                    cancellationToken: cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false);
 
             response.EnsureSuccessStatusCode();
 
-            var @string = await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false);
-
-            _logger?.LogDebug(
-                message:
-                $"POST response: {url}{Environment.NewLine}{@string.ToJToken().ToString(formatting: Formatting.Indented)}");
-
-            return @string;
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
+        /// <inheritdoc cref="Newtonsoft.Json.JsonConvert.SerializeObject(object?, Formatting)" />
+        private static string SerializeObject(object? value)
+            => JsonConvert.SerializeObject(value: value, formatting: Formatting.Indented);
+
+        /// <inheritdoc cref="System.Net.Http.StringContent"/>
         private static StringContent GetContent(string payload)
             => new StringContent(content: payload, encoding: Encoding.UTF8, mediaType: "application/json");
     }

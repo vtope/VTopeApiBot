@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using VTopeApiBot.Requests.AvailableMethods;
 using VTopeApiBot.Tests.Integration.Fixtures;
 using VTopeApiBot.Types.Enums;
 using Xunit;
@@ -41,7 +40,7 @@ namespace VTopeApiBot.Tests.Integration.AvailableMethods
 
         private Task ReadJsonAsync(string path)
         {
-            return _httpClient.ReadJsonAsync(path: Path.Combine(path1: nameof(GetBotsRequest), path2: path));
+            return _httpClient.ReadJsonAsync(path: Path.Combine(path1: "GetBotsRequest", path2: path));
         }
     }
 }

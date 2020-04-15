@@ -21,14 +21,6 @@ namespace VTopeApiBot
         Task<T> MakeRequestAsync<T>(string methodName, VTopeParams args, CancellationToken cancellationToken = default);
 
         /// <summary>
-        ///     Send a request to VTope API.
-        /// </summary>
-        /// <typeparam name="T">Type of expected result in the response object.</typeparam>
-        /// <param name="request">API request object.</param>
-        /// <returns>Result of the API request.</returns>
-        Task<T> MakeRequestAsync<T>(IRequest<T> request, CancellationToken cancellationToken = default);
-        
-        /// <summary>
         ///     Use this method to get list of all bots.
         /// </summary>
         /// <returns>On success, the sent list of all bots.</returns>
