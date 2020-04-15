@@ -13,10 +13,10 @@ namespace VTopeApiBot.Tests.Unit.Extensions
             const string json = @"{ ""test"": 123 }";
          
             // Act
-            var jToken = json.ToJToken();
+            var jObject = json.ToJObject();
 
-            Assert.IsType<JObject>(jToken);
-            Assert.Equal(expected: 123, actual: jToken[key: "test"]);
+            Assert.IsType<JObject>(jObject);
+            Assert.Equal(expected: 123, actual: jObject[key: "test"]);
         }
     }
 }

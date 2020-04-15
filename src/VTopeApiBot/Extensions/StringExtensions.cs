@@ -7,10 +7,10 @@ namespace VTopeApiBot.Extensions
     /// </summary>
     public static class StringExtensions
     {
-        /// <inheritdoc cref="Newtonsoft.Json.Linq.JToken.Parse(string)"/>
-        public static JToken ToJToken(this string s)
+        /// <inheritdoc cref="Newtonsoft.Json.Linq.JObject.Parse(string)"/>
+        public static JObject ToJObject(this string s)
         {
-            return JToken.Parse(json: s);
+            return JObject.Parse(json: s);
         }
     }
 }
