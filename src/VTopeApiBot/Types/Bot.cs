@@ -55,12 +55,11 @@ namespace VTopeApiBot.Types
         [JsonProperty(Required = Required.Always)]
         public AccountStatuses AccountStatuses { get; set; }
 
-        // TODO: update summary and property type.
         /// <summary>
-        ///     No information.
+        ///    Proxy statuses.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        public object? ProxyStatuses { get; set; }
+        public ProxyStatuses ProxyStatuses { get; set; }
 
         /// <summary>
         ///     Id bot.

@@ -1,0 +1,11 @@
+﻿{
+  "http": {
+    "used": 1,
+    "badstate": 2,
+    "tooslow": 3,
+    "queued_proxy": 4,
+    "tovalidate": 5,
+    "validating": 6,
+    "working": 7
+  }
+}
