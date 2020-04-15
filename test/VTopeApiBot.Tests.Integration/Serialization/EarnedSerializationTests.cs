@@ -11,34 +11,34 @@ namespace VTopeApiBot.Tests.Integration.Serialization
         public async Task Earned_Mapping_All_Properties()
         {
             // Arrange
-            await ReadJsonAsync(path: nameof(Earned_Mapping_All_Properties));
+            await ReadJsonAsync(nameof(Earned_Mapping_All_Properties));
 
             // Act
             var earned = DeserializeObject<Earned>();
 
             // Assert
-            Assert.Equal(expected: 1, actual: earned.Week);
-            Assert.Equal(expected: 2, actual: earned.Total);
-            Assert.Equal(expected: 3, actual: earned.Today);
-            Assert.Equal(expected: 4, actual: earned.Month);
-            Assert.Equal(expected: 5, actual: earned.Day);
+            Assert.Equal(1, earned.Week);
+            Assert.Equal(2, earned.Total);
+            Assert.Equal(3, earned.Today);
+            Assert.Equal(4, earned.Month);
+            Assert.Equal(5, earned.Day);
         }
 
         [Fact]
         public async Task Earned_Mapping_Required_Properties()
         {
             // Arrange
-            await ReadJsonAsync(path: nameof(Earned_Mapping_Required_Properties));
+            await ReadJsonAsync(nameof(Earned_Mapping_Required_Properties));
 
             // Act
             var earned = DeserializeObject<Earned>();
 
             // Assert
-            Assert.Null(@object: earned.Day);
-            Assert.Null(@object: earned.Today);
-            Assert.Equal(expected: 1, actual: earned.Week);
-            Assert.Equal(expected: 2, actual: earned.Total);
-            Assert.Equal(expected: 3, actual: earned.Month);
+            Assert.Null(earned.Day);
+            Assert.Null(earned.Today);
+            Assert.Equal(1, earned.Week);
+            Assert.Equal(2, earned.Total);
+            Assert.Equal(3, earned.Month);
         }
     }
 }

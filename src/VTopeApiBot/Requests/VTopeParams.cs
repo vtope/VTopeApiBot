@@ -13,12 +13,12 @@ namespace VTopeApiBot.Requests
         }
 
         /// <inheritdoc />
-        public VTopeParams(IDictionary<string, object> dictionary) : base(dictionary: dictionary)
+        public VTopeParams(IDictionary<string, object> dictionary) : base(dictionary)
         {
         }
 
         /// <summary>
-        ///     Params for request without params. 
+        ///     Params for request without params.
         /// </summary>
         public static VTopeParams Empty => new VTopeParams();
     }

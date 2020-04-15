@@ -7,7 +7,7 @@ namespace VTopeApiBot.Types.Responses
     /// <summary>
     ///     Response a list of all bots.
     /// </summary>
-    [JsonObject(memberSerialization: MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class BotsResponse
     {
         /// <summary>
@@ -15,7 +15,7 @@ namespace VTopeApiBot.Types.Responses
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public IEnumerable<Bot> Bots { get; set; }
-        
+
         /// <summary>
         ///     Earned information.
         /// </summary>

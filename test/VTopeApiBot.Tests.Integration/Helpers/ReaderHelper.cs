@@ -11,20 +11,17 @@ namespace VTopeApiBot.Tests.Integration.Helpers
 
         public async Task ReadJsonAsync(string path)
         {
-            Json = await ReadFileAsync(path: path);
+            Json = await ReadFileAsync(path);
         }
 
         private static Task<string> ReadFileAsync(string path)
         {
             const string testData = "testData";
-            var newPath = Path.Combine(path1: AppContext.BaseDirectory, path2: testData, path3: path + ".json");
-            
-            if (!File.Exists(path: newPath))
-            {
-                throw new FileNotFoundException(message: newPath);
-            }
+            var newPath = Path.Combine(AppContext.BaseDirectory, testData, path + ".json");
 
-            return File.ReadAllTextAsync(path: newPath, encoding: Encoding.UTF8);
+            if (!File.Exists(newPath)) throw new FileNotFoundException(newPath);
+
+            return File.ReadAllTextAsync(newPath, Encoding.UTF8);
         }
     }
 }

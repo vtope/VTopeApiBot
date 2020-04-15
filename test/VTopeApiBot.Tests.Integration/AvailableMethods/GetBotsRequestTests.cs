@@ -14,33 +14,33 @@ namespace VTopeApiBot.Tests.Integration.AvailableMethods
         
         public GetBotsRequestTests(HttpClientFixture httpClient)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(paramName: nameof(httpClient));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
-        
+
         [Fact]
         public async Task GetBots()
         {
             // Arrange
-            await ReadJsonAsync(path: nameof(GetBots));
-            
+            await ReadJsonAsync(nameof(GetBots));
+
             // Act
             var bots = await _httpClient.Bot.GetBotsAsync();
 
             // Assert
-            Assert.NotNull(@object: bots.Earned);
-            Assert.NotEmpty(collection: bots.Bots);
+            Assert.NotNull(bots.Earned);
+            Assert.NotEmpty(bots.Bots);
 
             var bot = bots.Bots.First();
-            Assert.Equal(expected: Status.Danger, actual: bot.Status);
-            Assert.Equal(expected: "botname", actual: bot.Name);
-            Assert.Equal(expected: Access.On, actual: bot.Access);
-            Assert.Equal(expected: 1234567, actual: bot.Id);
-            Assert.Null(@object: bot.AppName);
+            Assert.Equal(Status.Danger, bot.Status);
+            Assert.Equal("botname", bot.Name);
+            Assert.Equal(Access.On, bot.Access);
+            Assert.Equal(1234567, bot.Id);
+            Assert.Null(bot.AppName);
         }
-
+        
         private Task ReadJsonAsync(string path)
         {
-            return _httpClient.ReadJsonAsync(path: Path.Combine(path1: "GetBotsRequest", path2: path));
+            return _httpClient.ReadJsonAsync(Path.Combine("GetBotsRequest", path));
         }
     }
 }

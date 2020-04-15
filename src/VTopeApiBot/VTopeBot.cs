@@ -19,9 +19,6 @@ namespace VTopeApiBot
         /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials" />
         private readonly IBotCredentials _botCredentials;
 
-        private string User => _botCredentials.User;
-        private string Key => _botCredentials.Key;
-
         /// <inheritdoc cref="System.Net.Http.HttpClient" />
         private readonly HttpClient _httpClient;
 
@@ -38,14 +35,20 @@ namespace VTopeApiBot
         /// <param name="logger">Represents a type used to perform logging.</param>
         public VTopeBot(IBotCredentials botCredentials, HttpClient httpClient, ILogger logger)
         {
-            _botCredentials = botCredentials ?? throw new ArgumentNullException(paramName: nameof(botCredentials));
+            _botCredentials = botCredentials ?? throw new ArgumentNullException(nameof(botCredentials));
             _httpClient = httpClient ?? new HttpClient();
-            _logger = logger ?? new Logger<VTopeBot>(factory: new NullLoggerFactory());
+            _logger = logger ?? new Logger<VTopeBot>(new NullLoggerFactory());
         }
 
+        /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials.User"/>
+        private string User => _botCredentials.User;
+        
+        /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials.User"/>
+        private string Key => _botCredentials.Key;
+
         /// <inheritdoc />
-        public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default)
-            => MakeRequestAsync<BotsResponse>(methodName: "list", @params: VTopeParams.Empty, cancellationToken: cancellationToken);
+        public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default) 
+            => MakeRequestAsync<BotsResponse>("list", VTopeParams.Empty, cancellationToken);
 
         /// <inheritdoc />
         public void Dispose()
@@ -61,31 +64,22 @@ namespace VTopeApiBot
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (string.IsNullOrWhiteSpace(value: methodName))
-            {
-                throw new ArgumentException(message: "Value cannot be null or whitespace.", paramName: nameof(methodName));
-            }
+            if (string.IsNullOrWhiteSpace(methodName))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(methodName));
 
-            if (@params == null)
-            {
-                throw new ArgumentNullException(paramName: nameof(@params));
-            }
+            if (@params == null) throw new ArgumentNullException(nameof(@params));
 
             var url = $"https://vto.pe/botcontrol/{methodName}";
-            var payload = SerializeObject(value: Authorize(@params: @params));
-            var content = GetContent(payload: payload);
+            var payload = SerializeObject(Authorize(@params));
+            var content = GetContent(payload);
 
-            _logger?.LogDebug(message: $"POST request: {url}{Environment.NewLine}{payload}");
+            _logger?.LogDebug($"POST request: {url}{Environment.NewLine}{payload}");
 
-            var response = await PostAsync(
-                    requestUri: url,
-                    content: content,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false);
+            var response = await PostAsync(url, content, cancellationToken).ConfigureAwait(false);
 
             var json = response.ToJObject();
-            var formatted = json.ToString(formatting: Formatting.Indented);
-            _logger?.LogDebug(message: $"POST response: {url}{Environment.NewLine}{formatted}");
+            var formatted = json.ToString(Formatting.Indented);
+            _logger?.LogDebug($"POST response: {url}{Environment.NewLine}{formatted}");
 
             return json.ToObject<T>();
         }
@@ -95,49 +89,33 @@ namespace VTopeApiBot
         /// </summary>
         private VTopeParams Authorize(VTopeParams @params)
         {
-            if (@params == null)
-            {
-                throw new ArgumentNullException(paramName: nameof(@params));
-            }
-
-            if (!@params.ContainsKey(key: "user"))
-            {
-                @params.Add(key: "user", value: User);
-            }
-
-            if (!@params.ContainsKey(key: "key"))
-            {
-                @params.Add(key: "key", value: Key);
-            }
-
+            if (@params == null) throw new ArgumentNullException(nameof(@params));
+            if (!@params.ContainsKey("user")) @params.Add("user", User);
+            if (!@params.ContainsKey("key")) @params.Add("key", Key);
             return @params;
         }
 
-        /// <inheritdoc cref="System.Net.Http.HttpClient.PostAsync(String, HttpContent)"/>
+        /// <inheritdoc cref="System.Net.Http.HttpClient.PostAsync(string, HttpContent)" />
         private async Task<string> PostAsync(
             string requestUri,
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            
-            var response = await _httpClient.PostAsync(
-                    requestUri: requestUri,
-                    content: content,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false);
 
+            var response = await _httpClient.PostAsync(requestUri, content, cancellationToken).ConfigureAwait(false);
+            
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc cref="Newtonsoft.Json.JsonConvert.SerializeObject(object?, Formatting)" />
-        private static string SerializeObject(object? value)
-            => JsonConvert.SerializeObject(value: value, formatting: Formatting.Indented);
+        private static string SerializeObject(object? value) 
+            => JsonConvert.SerializeObject(value, Formatting.Indented);
 
-        /// <inheritdoc cref="System.Net.Http.StringContent"/>
-        private static StringContent GetContent(string payload)
-            => new StringContent(content: payload, encoding: Encoding.UTF8, mediaType: "application/json");
+        /// <inheritdoc cref="System.Net.Http.StringContent" />
+        private static StringContent GetContent(string payload) 
+            => new StringContent(payload, Encoding.UTF8, "application/json");
     }
 }

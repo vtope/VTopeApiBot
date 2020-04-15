@@ -11,27 +11,8 @@ namespace VTopeApiBot.Tests.Unit.Fluents
 {
     public class VTopeBotBuilderTests
     {
-        [Fact]
-        public void SetBot_CreateInstance_WithCredentials()
-        {
-            // Arrange
-            const string user = "user";
-            const string key = "key";
-
-            var botCredentials = new BotCredentials(user: user, key: key);
-
-            // Act
-            var botBuilder = new VTopeBotBuilder()
-                .SetBot(botCredentials: botCredentials)
-                .Build();
-
-            // Arrange
-            Assert.NotNull(@object: botBuilder);
-            Assert.IsAssignableFrom<IVTopeBot>(@object: botBuilder);
-        }
-
         [Theory]
-        [MemberData(memberName: nameof(GetCustomSetters))]
+        [MemberData(nameof(GetCustomSetters))]
         public void SetNullable_CustomSetters_ThrownArgumentException(
             IBotCredentials botCredentials,
             HttpClient httpClient,
@@ -39,14 +20,14 @@ namespace VTopeApiBot.Tests.Unit.Fluents
         {
             // Act
             Func<IVTopeBot> botBuilder = () => new VTopeBotBuilder()
-                .SetBot(botCredentials: botCredentials)
-                .UseHttpClient(httpClient: httpClient)
-                .UseLogger(logger: logger)
+                .SetBot(botCredentials)
+                .UseHttpClient(httpClient)
+                .UseLogger(logger)
                 .Build();
 
             // Arrange
-            Assert.NotNull(@object: botBuilder);
-            Assert.Throws<ArgumentNullException>(testCode: botBuilder);
+            Assert.NotNull(botBuilder);
+            Assert.Throws<ArgumentNullException>(botBuilder);
         }
 
         public static IEnumerable<object[]> GetCustomSetters()
@@ -55,20 +36,39 @@ namespace VTopeApiBot.Tests.Unit.Fluents
             {
                 null,
                 new HttpClient(),
-                new Logger<VTopeBotBuilderTests>(factory: new NullLoggerFactory()) 
+                new Logger<VTopeBotBuilderTests>(new NullLoggerFactory())
             };
             yield return new object[]
             {
-                new BotCredentials(user: "user", key: "key"),
+                new BotCredentials("user", "key"),
                 null,
-                new Logger<VTopeBotBuilderTests>(factory: new NullLoggerFactory()) 
+                new Logger<VTopeBotBuilderTests>(new NullLoggerFactory())
             };
             yield return new object[]
             {
-                new BotCredentials(user: "user", key: "key"),
+                new BotCredentials("user", "key"),
                 new HttpClient(),
                 null
             };
+        }
+
+        [Fact]
+        public void SetBot_CreateInstance_WithCredentials()
+        {
+            // Arrange
+            const string user = "user";
+            const string key = "key";
+
+            var botCredentials = new BotCredentials(user, key);
+
+            // Act
+            var botBuilder = new VTopeBotBuilder()
+                .SetBot(botCredentials)
+                .Build();
+
+            // Arrange
+            Assert.NotNull(botBuilder);
+            Assert.IsAssignableFrom<IVTopeBot>(botBuilder);
         }
     }
 }

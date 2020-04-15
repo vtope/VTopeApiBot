@@ -6,7 +6,7 @@ namespace VTopeApiBot.Types
     /// <summary>
     ///     This object represents a earnings.
     /// </summary>
-    [JsonObject(memberSerialization: MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class Earned
     {
         /// <summary>

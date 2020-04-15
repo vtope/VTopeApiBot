@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+
 // ReSharper disable UnusedMember.Global
 
 namespace VTopeApiBot.Types.Enums
@@ -7,7 +8,7 @@ namespace VTopeApiBot.Types.Enums
     /// <summary>
     ///     Bot status.
     /// </summary>
-    [JsonConverter(converterType: typeof(StringEnumConverter), true)]
+    [JsonConverter(typeof(StringEnumConverter), true)]
     public enum Status
     {
         /// <summary>

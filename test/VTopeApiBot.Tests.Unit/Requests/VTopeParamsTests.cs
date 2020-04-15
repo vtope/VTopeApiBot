@@ -16,12 +16,12 @@ namespace VTopeApiBot.Tests.Unit.Requests
             };
 
             // Arrange
-            var arg = new VTopeParams(dictionary: dictionary);
+            var arg = new VTopeParams(dictionary);
 
             // Assert
-            Assert.NotNull(@object: arg);
-            Assert.True(condition: arg.ContainsKey(key: "param1"));
-            Assert.True(condition: arg.ContainsValue(value: 123));
+            Assert.NotNull(arg);
+            Assert.True(arg.ContainsKey("param1"));
+            Assert.True(arg.ContainsValue(123));
         }
 
         [Fact]
@@ -31,9 +31,9 @@ namespace VTopeApiBot.Tests.Unit.Requests
             var arg = VTopeParams.Empty;
 
             // Assert
-            Assert.NotNull(@object: arg);
-            Assert.Empty(collection: arg);
-            Assert.IsType<VTopeParams>(@object: arg);
+            Assert.NotNull(arg);
+            Assert.Empty(arg);
+            Assert.IsType<VTopeParams>(arg);
         }
     }
 }

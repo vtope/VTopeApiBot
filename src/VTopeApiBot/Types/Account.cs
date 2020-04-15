@@ -1,4 +1,4 @@
-﻿﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace VTopeApiBot.Types
@@ -6,7 +6,7 @@ namespace VTopeApiBot.Types
     /// <summary>
     ///     This object represents accounts information.
     /// </summary>
-    [JsonObject(memberSerialization: MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class Account
     {
         /// <summary>

@@ -8,14 +8,14 @@ namespace VTopeApiBot.Types
     /// <summary>
     ///     This object represents a full bot information.
     /// </summary>
-    [JsonObject(memberSerialization: MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class Bot
     {
         /// <summary>
         ///     Bot status.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        [JsonConverter(converterType: typeof(StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Status Status { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace VTopeApiBot.Types
         ///     Bot access.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        [JsonConverter(converterType: typeof(StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Access Access { get; set; }
 
         /// <summary>
@@ -55,14 +55,14 @@ namespace VTopeApiBot.Types
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public object? AccountStatuses { get; set; }
-        
+
         // TODO: update summary and property type.
         /// <summary>
         ///     No information.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public object? ProxyStatuses { get; set; }
-        
+
         /// <summary>
         ///     Id bot.
         /// </summary>

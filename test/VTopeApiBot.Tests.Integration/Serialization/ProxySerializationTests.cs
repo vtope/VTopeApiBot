@@ -11,15 +11,15 @@ namespace VTopeApiBot.Tests.Integration.Serialization
         public async Task Proxy_Mapping_All_Properties()
         {
             // Arrange
-            await ReadJsonAsync(path: nameof(Proxy_Mapping_All_Properties));
+            await ReadJsonAsync(nameof(Proxy_Mapping_All_Properties));
 
             // Act
             var earned = DeserializeObject<Proxy>();
 
             // Assert
-            Assert.Equal(expected: 1, actual: earned.Warning);
-            Assert.Equal(expected: 3, actual: earned.Success);
-            Assert.Equal(expected: 4, actual: earned.Danger);
+            Assert.Equal(1, earned.Warning);
+            Assert.Equal(3, earned.Success);
+            Assert.Equal(4, earned.Danger);
         }
     }
 }

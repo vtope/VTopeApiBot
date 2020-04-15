@@ -12,25 +12,25 @@ namespace VTopeApiBot.Tests.Unit
             // Arrange
             const string user = "user";
             const string key = "key";
-            
-            var botCredentials = new BotCredentials(user: user, key: key);
+
+            var botCredentials = new BotCredentials(user, key);
 
             // Act
-            var instance = new VTopeBot(botCredentials: botCredentials, httpClient: null, logger: null); 
-            
+            var instance = new VTopeBot(botCredentials, null, null);
+
             // Assert
-            Assert.NotNull(@object: instance);
+            Assert.NotNull(instance);
         }
 
         [Fact]
         public void IncorrectCredentials_ThrownArgumentNullException()
         {
             // Act
-            Func<VTopeBot> instance = () => new VTopeBot(botCredentials: null, httpClient: null, logger: null);
-            
+            Func<VTopeBot> instance = () => new VTopeBot(null, null, null);
+
             // Assert
-            Assert.NotNull(@object: instance);
-            Assert.Throws<ArgumentNullException>(testCode: instance);
+            Assert.NotNull(instance);
+            Assert.Throws<ArgumentNullException>(instance);
         }
     }
 }

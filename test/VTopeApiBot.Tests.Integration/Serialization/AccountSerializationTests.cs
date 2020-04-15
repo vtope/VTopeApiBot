@@ -11,16 +11,16 @@ namespace VTopeApiBot.Tests.Integration.Serialization
         public async Task Account_Mapping_All_Properties()
         {
             // Arrange
-            await ReadJsonAsync(path: nameof(Account_Mapping_All_Properties));
+            await ReadJsonAsync(nameof(Account_Mapping_All_Properties));
 
             // Act
             var earned = DeserializeObject<Account>();
 
             // Assert
-            Assert.Equal(expected: 1, actual: earned.Warning);
-            Assert.Equal(expected: 2, actual: earned.Primary);
-            Assert.Equal(expected: 3, actual: earned.Success);
-            Assert.Equal(expected: 4, actual: earned.Danger);
+            Assert.Equal(1, earned.Warning);
+            Assert.Equal(2, earned.Primary);
+            Assert.Equal(3, earned.Success);
+            Assert.Equal(4, earned.Danger);
         }
     }
 }

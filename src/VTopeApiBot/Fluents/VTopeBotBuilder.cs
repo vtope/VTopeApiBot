@@ -8,37 +8,40 @@ namespace VTopeApiBot.Fluents
     /// <inheritdoc />
     public class VTopeBotBuilder : IVTopeBotBuilder
     {
-        /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials"/>
+        /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials" />
         private IBotCredentials _botCredentials;
 
-        /// <inheritdoc cref="System.Net.Http.HttpClient"/>
+        /// <inheritdoc cref="System.Net.Http.HttpClient" />
         private HttpClient _httpClient;
 
-        /// <inheritdoc cref="Microsoft.Extensions.Logging.ILogger"/>
+        /// <inheritdoc cref="Microsoft.Extensions.Logging.ILogger" />
         private ILogger _logger;
-        
+
         /// <inheritdoc />
         public VTopeBotBuilder SetBot(IBotCredentials botCredentials)
         {
-            _botCredentials = botCredentials ?? throw new ArgumentNullException(paramName: nameof(botCredentials));
+            _botCredentials = botCredentials ?? throw new ArgumentNullException(nameof(botCredentials));
             return this;
         }
-        
+
         /// <inheritdoc />
         public VTopeBotBuilder UseHttpClient(HttpClient httpClient)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(paramName: nameof(httpClient));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             return this;
         }
 
         /// <inheritdoc />
         public VTopeBotBuilder UseLogger(ILogger logger)
         {
-            _logger = logger ?? throw new ArgumentNullException(paramName: nameof(logger));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             return this;
         }
 
         /// <inheritdoc />
-        public IVTopeBot Build() => new VTopeBot(botCredentials: _botCredentials, httpClient: _httpClient, logger: _logger);
+        public IVTopeBot Build()
+        {
+            return new VTopeBot(_botCredentials, _httpClient, _logger);
+        }
     }
 }

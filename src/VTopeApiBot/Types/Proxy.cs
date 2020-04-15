@@ -4,9 +4,9 @@ using Newtonsoft.Json.Serialization;
 namespace VTopeApiBot.Types
 {
     /// <summary>
-    ///    This object represents a proxies information.
+    ///     This object represents a proxies information.
     /// </summary>
-    [JsonObject(memberSerialization: MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public class Proxy
     {
         /// <summary>
@@ -14,13 +14,13 @@ namespace VTopeApiBot.Types
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public long Warning { get; set; }
-        
+
         /// <summary>
         ///     Number of proxies in operation.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public long Success { get; set; }
-        
+
         /// <summary>
         ///     Number of inactive proxies.
         /// </summary>

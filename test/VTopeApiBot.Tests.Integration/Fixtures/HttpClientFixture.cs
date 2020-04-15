@@ -19,27 +19,25 @@ namespace VTopeApiBot.Tests.Integration.Fixtures
 
         public HttpClientFixture()
         {
-            _mocker.Use<IBotCredentials>(service: new BotCredentials(user: "user", key: "key"));
-            _mocker.Setup<HttpClient, Task<HttpResponseMessage>>(setup: x =>
+            _mocker.Use<IBotCredentials>(new BotCredentials("user", "key"));
+            _mocker.Setup<HttpClient, Task<HttpResponseMessage>>(x =>
                     x.SendAsync(IsAny<HttpRequestMessage>(), IsAny<CancellationToken>()))
-                .ReturnsAsync(valueFunction: () =>
+                .ReturnsAsync(() =>
                 {
-                    if (string.IsNullOrWhiteSpace(value: Json))
-                    {
-                        throw new ArgumentException(message: "Value cannot be null or whitespace.", paramName: nameof(Json));
-                    }
+                    if (string.IsNullOrWhiteSpace(Json))
+                        throw new ArgumentException("Value cannot be null or whitespace.", nameof(Json));
 
                     return new HttpResponseMessage
                     {
                         StatusCode = HttpStatusCode.OK,
-                        Content = new StringContent(content: Json)
+                        Content = new StringContent(Json)
                     };
                 });
-                
-            _mocker.Use(service: new Logger<VTopeBot>(factory: new NullLoggerFactory()));
+
+            _mocker.Use(new Logger<VTopeBot>(new NullLoggerFactory()));
             Bot = _mocker.CreateInstance<VTopeBot>();
         }
-        
+
         public IVTopeBot Bot { get; }
     }
 }
