@@ -49,7 +49,7 @@ namespace VTopeApiBot
         /// <inheritdoc />
         public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default) 
             => MakeRequestAsync<BotsResponse>("list", VTopeParams.Empty, cancellationToken);
-
+        
         /// <inheritdoc />
         public void Dispose()
         {

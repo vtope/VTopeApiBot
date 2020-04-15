@@ -1,0 +1,38 @@
+﻿{
+  "i": {
+    "manual": 1,
+    "ipv6Proxy": 2,
+    "loadErrorMobileCode": 3,
+    "duplicate": 4,
+    "banned": 5,
+    "badAuth": 6,
+    "badProxy": 7,
+    "levelZeroAccount": 8,
+    "nonValidating": 9,
+    "validating": 10,
+    "toManual": 11,
+    "toManualMobileCode": 12,
+    "preValidating": 13,
+    "badPreAuth": 14,
+    "okPreAuth": 15,
+    "waitProxy": 16,
+    "queued": 17,
+    "nonWorking": 18,
+    "working": 19,
+    "toInfo": 20,
+    "sleepingTimestamp": 21,
+    "workingBlocked": 22
+  },
+  "v": {
+    "badauth": 1
+  },
+  "y": {
+    "manual": 2
+  },
+  "o": {
+    "badauth": 1
+  },
+  "m": {
+    "badauth": 1
+  }
+}

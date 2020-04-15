@@ -48,13 +48,12 @@ namespace VTopeApiBot.Types
         /// </summary>
         [JsonProperty(Required = Required.Always)]
         public Account Accounts { get; set; }
-
-        // TODO: update summary and property type.
+    
         /// <summary>
-        ///     No information.
+        ///     Account statuses.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        public object? AccountStatuses { get; set; }
+        public AccountStatuses AccountStatuses { get; set; }
 
         // TODO: update summary and property type.
         /// <summary>
