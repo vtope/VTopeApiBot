@@ -7,16 +7,16 @@ namespace VTopeApiBot.Tests.Unit.Extensions
     public class StringExtensionsTests
     {
         [Fact]
-        public void ToJToken()
+        public void ToJObject()
         {
             // Arrange
-            const string json = @"{ ""test"": 123 }";
+            const string json = @"{ ""key"": { ""value"": 123 } }";
 
             // Act
             var jObject = json.ToJObject();
 
             Assert.IsType<JObject>(jObject);
-            Assert.Equal(123, jObject[key: "test"]);
+            Assert.Equal(123, jObject["key"]["value"]);
         }
     }
 }
