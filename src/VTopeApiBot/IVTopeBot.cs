@@ -27,6 +27,15 @@ namespace VTopeApiBot
         Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
+        ///     Use this method to rename bot by id
+        /// </summary>
+        /// <param name="id">Bot id</param>
+        /// <param name="name">New bot name</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>On success, the sent ok response</returns>
+        Task<CodeResponse> RenameBotAsync(long id, string name, CancellationToken cancellationToken = default);
+
+        /// <summary>
         ///     Use this method to delete bot by id.
         /// </summary>
         /// <param name="id">Bot id.</param>

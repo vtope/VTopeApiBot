@@ -51,6 +51,14 @@ namespace VTopeApiBot
             => MakeRequestAsync<BotsResponse>("list", VTopeParams.Empty, cancellationToken);
 
         /// <inheritdoc/>
+        public Task<CodeResponse> RenameBotAsync(long id, string name, CancellationToken cancellationToken = default)
+            => MakeRequestAsync<CodeResponse>("renamebot", new VTopeParams
+            {
+                {"bot", id},
+                {"name", name}
+            }, cancellationToken);
+        
+        /// <inheritdoc/>
         public Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync<CodeResponse>("deletebot", new VTopeParams
             {
