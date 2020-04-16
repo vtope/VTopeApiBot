@@ -109,12 +109,8 @@ namespace VTopeApiBot
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
+            cancellationToken.ThrowIfCancellationRequested();    
             var response = await _httpClient.PostAsync(requestUri, content, cancellationToken).ConfigureAwait(false);
-            
-            response.EnsureSuccessStatusCode();
-
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
