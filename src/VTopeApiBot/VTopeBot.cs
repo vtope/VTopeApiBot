@@ -42,12 +42,12 @@ namespace VTopeApiBot
 
         /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials.User"/>
         private string User => _botCredentials.User;
-        
+
         /// <inheritdoc cref="VTopeApiBot.Credentials.IBotCredentials.User"/>
         private string Key => _botCredentials.Key;
 
         /// <inheritdoc />
-        public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default) 
+        public Task<BotsResponse> GetBotsAsync(CancellationToken cancellationToken = default)
             => MakeRequestAsync<BotsResponse>("list", VTopeParams.Empty, cancellationToken);
 
         /// <inheritdoc/>
@@ -57,7 +57,7 @@ namespace VTopeApiBot
                 {"bot", id},
                 {"name", name}
             }, cancellationToken);
-        
+
         /// <inheritdoc/>
         public Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default)
             => MakeRequestAsync<CodeResponse>("deletebot", new VTopeParams
@@ -65,6 +65,13 @@ namespace VTopeApiBot
                 {"bot", id}
             }, cancellationToken);
 
+        /// <inheritdoc/>
+        public Task<CodeResponse> ChangeEarnStateRequestAsync(long id, bool state, CancellationToken cancellationToken = default)
+            => MakeRequestAsync<CodeResponse>("earnstate", new VTopeParams
+            {
+                {"bot", id},
+                {"state", state}
+            }, cancellationToken);
 
         /// <inheritdoc />
         public void Dispose()
@@ -117,17 +124,17 @@ namespace VTopeApiBot
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();    
+            cancellationToken.ThrowIfCancellationRequested();
             var response = await _httpClient.PostAsync(requestUri, content, cancellationToken).ConfigureAwait(false);
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc cref="Newtonsoft.Json.JsonConvert.SerializeObject(object?, Formatting)" />
-        private static string SerializeObject(object? value) 
+        private static string SerializeObject(object? value)
             => JsonConvert.SerializeObject(value, Formatting.Indented);
 
         /// <inheritdoc cref="System.Net.Http.StringContent" />
-        private static StringContent GetContent(string payload) 
+        private static StringContent GetContent(string payload)
             => new StringContent(payload, Encoding.UTF8, "application/json");
     }
 }

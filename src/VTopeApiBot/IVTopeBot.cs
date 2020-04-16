@@ -41,5 +41,13 @@ namespace VTopeApiBot
         /// <param name="id">Bot id.</param>
         /// <returns>On success, the sent ok response.</returns>
         Task<CodeResponse> DeleteBotAsync(long id, CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        ///     Use this method to change bot earn state.
+        /// </summary>
+        /// <param name="id">Bot id.</param>
+        /// <param name="state">Earning status.</param>
+        /// <returns>On success, the sent ok response.</returns>
+        Task<CodeResponse> ChangeEarnStateRequestAsync(long id,  bool state, CancellationToken cancellationToken = default);
     }
 }
